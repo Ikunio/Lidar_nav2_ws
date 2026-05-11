@@ -1,0 +1,14 @@
+/camera_2_base_link:        # Node("...") 填写Node名字
+  ros__parameters:
+    static_x: -0.16688
+    static_y: -0.29466
+    static_z: 1.14144
+    static_roll: 0.0
+    static_pitch: 0.2618
+    static_yaw: 0.0
+    # static_x: 0.432
+    # static_y: -0.422
+    # static_z: 0.830
+    # static_roll: 0.0
+    # static_pitch: 0.5236
+    # static_yaw: 0.0

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<robot name="gld_robot_description">
+
+  <link name="base_footprint" />
+  <link name="chassis" />
+
+  <link name="livox_frame" />
+
+  <link name="D456_1_link" />
+  <link name="D456_2_link" />
+  <link name="D405_1_link" />
+  <link name="D405_2_link" />
+
+  <link name="orbbec_gemini_1_link" />
+  <link name="orbbec_gemini_2_link" />
+  <link name="orbbec_gemini_3_link" />
+
+
+  <!-- 底盘高度 -->
+  <joint name="base_to_chassis" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="chassis"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- livox_frame (弧度制) -->
+  <joint name="chassis_to_livox_frame" type="fixed">
+    <parent link="chassis"/>
+    <child link="livox_frame"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </joint>
+
+
+  <!-- Realsense D456 -->
+  <joint name="chassis_to_D456_1" type="fixed">
+    <parent link="chassis"/>
+    <child link="D456_1_link"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="chassis_to_D456_2" type="fixed">
+    <parent link="chassis"/>
+    <child link="D456_2_link"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Realsense D405 -->
+  <joint name="chassis_to_D405_1" type="fixed">
+    <parent link="chassis"/>
+    <child link="D405_1_link"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="chassis_to_D405_2" type="fixed">
+    <parent link="chassis"/>
+    <child link="D405_2_link"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Orbbec Gemini -->
+  <joint name="chassis_to_orbbec_gemini_1" type="fixed">
+    <parent link="chassis"/>
+    <child link="orbbec_gemini_1_link"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="chassis_to_orbbec_gemini_2" type="fixed">
+    <parent link="chassis"/>
+    <child link="orbbec_gemini_2_link"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="chassis_to_orbbec_gemini_3" type="fixed">
+    <parent link="chassis"/>
+    <child link="orbbec_gemini_3_link"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </joint>
+
+</robot>

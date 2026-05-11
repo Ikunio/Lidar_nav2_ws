@@ -1,0 +1,17 @@
+# 编译与系统生成目录
+build/
+install/
+log/
+__pycache__/
+*.o
+*.so
+
+# 大型二进制文件与深度学习模型
+*.pt
+*.pth
+*.onnx
+*.weights
+*.engine
+
+.claude/
+.codex

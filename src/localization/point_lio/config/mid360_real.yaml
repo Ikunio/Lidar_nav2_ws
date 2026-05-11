@@ -1,0 +1,85 @@
+# =============================================================================
+# Point-LIO 配置文件 - 实机
+# =============================================================================
+# 实机时使用此配置，直接订阅 livox_ros_driver2 发布的点云
+# livox_ros_driver2 以 xfer_format=1 发布 CustomMsg 格式
+# Point-LIO 使用 lidar_type=1（AVIA handler）直接解析 CustomMsg，无需 ring/time 字段
+#
+# 与仿真配置的差异：
+#   - lid_topic: "livox/lidar"（直接订阅雷达驱动输出，非转换器）
+#   - lidar_type: 1（CustomMsg，非仿真用的 lidar_type=2/Velodyne）
+#   - scan_line: 4（MID360 实机 4 线激光）
+#   - gravity: Z 轴正方向（实机 IMU 重力方向与仿真相反）
+
+/**:
+    ros__parameters:
+        use_imu_as_input: False
+        prop_at_freq_of_imu: True
+        check_satu: True
+        init_map_size: 10
+        point_filter_num: 4
+        space_down_sample: True
+        filter_size_surf: 0.05
+        filter_size_map: 0.15
+        ivox_nearby_type: 6
+        runtime_pos_log_enable: False
+
+        common:
+            lid_topic: "livox/lidar"                     # 实机：直接订阅 livox_ros_driver2 输出
+            imu_topic: "livox/imu"
+            con_frame: False
+            con_frame_num: 1
+            cut_frame: False
+            cut_frame_time_interval: 0.1
+            time_diff_lidar_to_imu: 0.0
+
+        prior_pcd:
+            enable: False
+            prior_pcd_map_path: ""
+            init_pose: [ 0.0, 0.0, 0.0 ]
+
+        preprocess:
+            lidar_type: 1                               # 1 = AVIA（订阅 CustomMsg，livox_ros_driver2 xfer_format=1）
+            scan_line: 4                                 # 实机：MID360 4 线激光
+            timestamp_unit: 3                            # 实机：livox_ros_driver2 timestamp 单位为纳秒
+            blind: 0.5
+
+        mapping:
+            imu_en: True
+            extrinsic_est_en: False                       
+            imu_time_inte: 0.005
+            lidar_time_inte: 0.1
+            satu_acc: 3.0
+            satu_gyro: 35.0
+            acc_norm: 1.0
+            lidar_meas_cov: 0.01
+            acc_cov_output: 500.0
+            gyr_cov_output: 1000.0
+            b_acc_cov: 0.0001
+            b_gyr_cov: 0.0001
+            imu_meas_acc_cov: 0.01
+            imu_meas_omg_cov: 0.01
+            gyr_cov_input: 0.01
+            acc_cov_input: 0.1
+            plane_thr: 0.1
+            match_s: 81.0
+            ivox_grid_resolution: 2.0
+            gravity: [ -0.0205, -0.0912, -9.8684 ]       # 实机：重力方向 Z 轴正方向
+            gravity_init: [ -0.0205, -0.0912, -9.8684 ]
+            extrinsic_T: [ -0.011, -0.02329, 0.04412 ]
+            extrinsic_R: [ 1.0, 0.0, 0.0,
+                           0.0, 1.0, 0.0,
+                           0.0, 0.0, 1.0 ]
+
+        odometry:
+            publish_odometry_without_downsample: False
+
+        publish:
+            path_en: True
+            scan_publish_en: True
+            scan_bodyframe_pub_en: True
+            tf_send_en: True
+
+        pcd_save:
+            pcd_save_en: True
+            interval: -1

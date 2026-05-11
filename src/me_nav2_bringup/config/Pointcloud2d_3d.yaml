@@ -1,0 +1,13 @@
+Pointcloud2d_3d:
+  ros__parameters:
+    target_frame: "livox_frame" # 扫描参考坐标系
+    transform_tolerance: 0.01
+    min_height: 0.2    # 切片下界（车顶以上，避开地面）
+    max_height: 1.0    # 切片上界
+    angle_min: -3.14159
+    angle_max: 3.14159
+    angle_increment: 0.0087 # 约 0.5 度分辨率
+    scan_time: 0.1
+    range_min: 0.05     # 最小有效距离（米）
+    range_max: 70.0    # 最大有效距离（米）
+    use_sim_time: true

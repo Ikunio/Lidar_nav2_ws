@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<sdf version="1.7">
+  <!--xmacro_define_block: livox-->
+  <xmacro_define_block name="livox" params="prefix parent pose update_rate samples">
+    <joint name="${prefix}livox_joint" type="fixed">
+      <pose relative_to="${parent}">${pose}</pose>
+      <parent>${parent}</parent>
+      <child>${prefix}mid360</child>
+    </joint>
+    <link name="${prefix}mid360">
+      <pose relative_to="${prefix}livox_joint">0.0 0.0 0.0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0.02 0 0 0</pose>
+        <xmacro_block name="inertia_cylinder" m="0.005" r="0.04" l="0.04" />
+      </inertial>
+      <visual name="visual">
+        <pose>0.0 0.0 0.0 0 0 ${pi}</pose>
+        <geometry>
+          <mesh>
+            <uri>model://mid360/meshes/mid360.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+
+      <sensor name="${prefix}mid360_imu" type="imu">
+        <ignition_frame_id>${prefix}mid360</ignition_frame_id>
+        <always_on>1</always_on>
+        <update_rate>200</update_rate>
+        <visualize>true</visualize>
+      </sensor>
+
+      <sensor name="${prefix}mid360_lidar" type="gpu_lidar">
+        <ignition_frame_id>${prefix}mid360</ignition_frame_id>
+        <pose>0 0 0.03 0 0 0</pose>
+        <always_on>true</always_on>
+        <visualize>true</visualize>
+        <update_rate>${update_rate}</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>${samples}</samples>
+              <resolution>1.0</resolution>
+              <min_angle>0</min_angle>
+              <max_angle>6.2831852</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>32</samples>
+              <min_angle>-0.12217304764</min_angle>
+              <max_angle>0.90757121104</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.1</min>
+            <max>40.0</max>
+          </range>
+        </ray>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </sensor>
+    </link>
+  </xmacro_define_block>
+
+  <!--Livox mid360-->
+  <model name='simple_livox'>
+    <pose>0 0 0.2 0 0 0</pose>
+    <link name="base_link">
+      <inertial>
+        <xmacro_block name="inertia_box" m="0.4" x="0.4" y="0.4" z="0.4" />
+      </inertial>
+      <visual name="visual">
+        <xmacro_block name="geometry_box" x="0.4" y="0.4" z="0.4" />
+      </visual>
+      <collision name="collision">
+        <xmacro_block name="geometry_box" x="0.4" y="0.4" z="0.4" />
+      </collision>
+    </link>
+    <!--update_rate(10-15),samples(400)-->
+    <xmacro_block name="livox" prefix="simple_" parent="base_link" pose="0 0 0.2 0 0 0" update_rate="10" samples="1500"/>
+  </model>
+</sdf>

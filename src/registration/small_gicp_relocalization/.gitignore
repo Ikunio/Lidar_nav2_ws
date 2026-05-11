@@ -1,0 +1,15 @@
+build
+
+devel
+
+install
+
+log/*
+
+.catkin_workspace
+
+.vscode
+
+.cache
+
+__pycache__

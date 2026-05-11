@@ -1,0 +1,84 @@
+# =============================================================================
+# Point-LIO 配置文件 - 仿真环境
+# =============================================================================
+# 仿真时使用此配置，配合 ign_sim_pointcloud_tool 转换器
+# 转换器将 Gazebo 发布的基本 PointCloud2 转为 velodyne 格式（添加 ring 和 time 字段）
+#
+# 与实机配置的差异：
+#   - lid_topic: "velodyne_points"（转换器输出话题，非 /livox/lidar）
+#   - scan_line: 50（仿真垂直扫描线数，非实机的 4）
+#   - gravity: Z 轴取反（仿真重力方向与实机相反）
+#   - extrinsic_est_en: True（在线估计外参，与 FAST-LIO 一致）
+
+/**:
+    ros__parameters:
+        use_imu_as_input: False
+        prop_at_freq_of_imu: True
+        check_satu: True
+        init_map_size: 10
+        point_filter_num: 4
+        space_down_sample: True
+        filter_size_surf: 0.05
+        filter_size_map: 0.15
+        ivox_nearby_type: 6
+        runtime_pos_log_enable: False
+
+        common:
+            lid_topic: "velodyne_points"                # 仿真：订阅转换器输出的 velodyne 格式点云
+            imu_topic: "livox/imu"
+            con_frame: False
+            con_frame_num: 1
+            cut_frame: False
+            cut_frame_time_interval: 0.1
+            time_diff_lidar_to_imu: 0.0
+
+        prior_pcd:
+            enable: False
+            prior_pcd_map_path: ""
+            init_pose: [ 0.0, 0.0, 0.0 ]
+
+        preprocess:
+            lidar_type: 2                               # 2 = Velodyne（订阅 PointCloud2，需要 ring 和 time 字段）
+            scan_line: 50                                # 仿真：垂直扫描线数（Gazebo ray sensor 配置）
+            timestamp_unit: 0                            # 仿真：转换器输出 time 单位为秒（velodyne_handler 直接 ×1000 转毫秒）
+            blind: 0.5
+
+        mapping:
+            imu_en: True
+            extrinsic_est_en: False                       
+            imu_time_inte: 0.005
+            lidar_time_inte: 0.1
+            satu_acc: 3.0
+            satu_gyro: 35.0
+            acc_norm: 9.81                               # 仿真：Gazebo IMU 输出单位为 m/s²，需设为 9.81
+            lidar_meas_cov: 0.01
+            acc_cov_output: 500.0
+            gyr_cov_output: 1000.0
+            b_acc_cov: 0.0001
+            b_gyr_cov: 0.0001
+            imu_meas_acc_cov: 0.01
+            imu_meas_omg_cov: 0.01
+            gyr_cov_input: 0.01
+            acc_cov_input: 0.1
+            plane_thr: 0.1
+            match_s: 81.0
+            ivox_grid_resolution: 2.0
+            gravity: [ -0.0205, -0.0912, -9.8684 ]      # 仿真：重力方向 Z 轴取反
+            gravity_init: [ -0.0205, -0.0912, -9.8684 ]
+            extrinsic_T: [ -0.011, -0.02329, 0.04412 ]
+            extrinsic_R: [ 1.0, 0.0, 0.0,
+                           0.0, 1.0, 0.0,
+                           0.0, 0.0, 1.0 ]
+
+        odometry:
+            publish_odometry_without_downsample: False
+
+        publish:
+            path_en: True
+            scan_publish_en: True
+            scan_bodyframe_pub_en: True
+            tf_send_en: True
+
+        pcd_save:
+            pcd_save_en: True
+            interval: -1
