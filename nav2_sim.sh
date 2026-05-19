@@ -16,35 +16,35 @@
 
 # -----------------------------------------------------------------------------------
 # # 使用fast-lio作为里程计
-gnome-terminal --title="FAST-LIO 里程计" -- bash -c "
-source install/setup.bash;
-ros2 launch fast_lio mapping.launch.py"
+# gnome-terminal --title="FAST-LIO 里程计" -- bash -c "
+# source install/setup.bash;
+# ros2 launch fast_lio mapping.launch.py"
 
-# 里程计接口
-gnome-terminal --title="lio_interface" -- bash -c "
-source install/setup.bash;
-ros2 launch lio_interface lio_interface_launch.py"
+# # 里程计接口
+# gnome-terminal --title="lio_interface" -- bash -c "
+# source install/setup.bash;
+# ros2 launch lio_interface lio_interface_launch.py"
 
 # ------------------------------------------------------------------------------------
 
 # # 使用point-lio作为里程计
-# gnome-terminal --title="点云格式转换器" -- bash -c "
-# source install/setup.bash;
-# ros2 run ign_sim_pointcloud_tool ign_sim_pointcloud_tool_node --ros-args \
-#   -p pcd_topic:=/livox/lidar \
-#   -p n_scan:=50 \
-#   -p horizon_scan:=360 \
-#   -p ang_bottom:=7.22 \
-#   -p ang_res_y:=1.248"
+gnome-terminal --title="点云格式转换器" -- bash -c "
+source install/setup.bash;
+ros2 run ign_sim_pointcloud_tool ign_sim_pointcloud_tool_node --ros-args \
+  -p pcd_topic:=/livox/lidar \
+  -p n_scan:=50 \
+  -p horizon_scan:=360 \
+  -p ang_bottom:=7.22 \
+  -p ang_res_y:=1.248"
 
-# gnome-terminal --title="Point-LIO 里程计" -- bash -c "
-# source install/setup.bash;
-# ros2 launch point_lio point_lio.launch.py use_sim_time:=True\
-#   point_lio_cfg_dir:=/home/pio/Nav2_3D_ws/src/localization/point_lio/config/mid360_sim.yaml"
+gnome-terminal --title="Point-LIO 里程计" -- bash -c "
+source install/setup.bash;
+ros2 launch point_lio point_lio.launch.py use_sim_time:=True\
+  point_lio_cfg_dir:=/home/pio/Nav2_3D_ws/src/localization/point_lio/config/mid360_sim.yaml"
 
-# gnome-terminal --title="lio_interface" -- bash -c "
-# source install/setup.bash;
-# ros2 launch lio_interface pointlio_lio_interface_launch.py"
+gnome-terminal --title="lio_interface" -- bash -c "
+source install/setup.bash;
+ros2 launch lio_interface pointlio_lio_interface_launch.py"
 
 # ------------------------------------------------------------------------------------
 
